@@ -5,10 +5,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="SQL优化技巧, 银川煜总">
-    <meta name="description" content="避免使用select *很多时候，我们写sql语句时，为了方便，喜欢直接使用select *，一次性查出表中所有列的数据。
+    <meta name="description" content="优化技巧避免使用select *很多时候，我们写sql语句时，为了方便，喜欢直接使用select *，一次性查出表中所有列的数据。
 1select * from user where id=1;
 
-在实际业务场景中，可能我们真正需要使用的只有其中一">
+在实际业务场景中，可能我们真正需要使用的只">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -416,7 +416,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h6 id="避免使用select"><a href="#避免使用select" class="headerlink" title="避免使用select *"></a>避免使用select *</h6><p>很多时候，我们写sql语句时，为了方便，喜欢直接使用<code>select *</code>，一次性查出表中所有列的数据。</p>
+                <h2 id="优化技巧"><a href="#优化技巧" class="headerlink" title="优化技巧"></a>优化技巧</h2><h3 id="避免使用select"><a href="#避免使用select" class="headerlink" title="避免使用select *"></a>避免使用select *</h3><p>很多时候，我们写sql语句时，为了方便，喜欢直接使用<code>select *</code>，一次性查出表中所有列的数据。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from user where id=1;</span><br></pre></td></tr></table></figure>
 
 <p>在实际业务场景中，可能我们真正需要使用的只有其中一两列。查了很多数据，但是不用，白白浪费了数据库资源，比如：内存或者cpu。</p>
@@ -426,7 +426,7 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> name,age <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> id<span class="operator">=</span><span class="number">1</span>;</span><br></pre></td></tr></table></figure>
 
 <p>sql语句查询时，只查需要用到的列，多余的列根本无需查出来。</p>
-<h6 id="小表驱动大表"><a href="#小表驱动大表" class="headerlink" title="小表驱动大表"></a>小表驱动大表</h6><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">order</span></span><br><span class="line"><span class="keyword">where</span> user_id <span class="keyword">in</span> (<span class="keyword">select</span> id <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> status<span class="operator">=</span><span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="小表驱动大表"><a href="#小表驱动大表" class="headerlink" title="小表驱动大表"></a>小表驱动大表</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">order</span></span><br><span class="line"><span class="keyword">where</span> user_id <span class="keyword">in</span> (<span class="keyword">select</span> id <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> status<span class="operator">=</span><span class="number">1</span>)</span><br></pre></td></tr></table></figure>
 
                 
             </div>
