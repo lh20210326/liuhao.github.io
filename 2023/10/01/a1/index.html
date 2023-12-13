@@ -417,7 +417,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h6 id="避免使用select"><a href="#避免使用select" class="headerlink" title="避免使用select *"></a>避免使用select *</h6><p>很多时候，我们写sql语句时，为了方便，喜欢直接使用<code>select *</code>，一次性查出表中所有列的数据。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> id<span class="operator">=</span><span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from user where id=1;</span><br></pre></td></tr></table></figure>
 
 <p>在实际业务场景中，可能我们真正需要使用的只有其中一两列。查了很多数据，但是不用，白白浪费了数据库资源，比如：内存或者cpu。</p>
 <p>此外，多查出来的数据，通过网络IO传输的过程中，也会增加数据传输的时间。</p>
