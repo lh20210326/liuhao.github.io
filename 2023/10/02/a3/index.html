@@ -4,10 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="SQL优化技巧, 银川煜总">
-    <meta name="description" content="优化技巧**避免使用select **很多时候，我们写sql语句时，为了方便，喜欢直接使用select *，一次性查出表中所有列的数据。
-select * from user where id=1;
-在实际业务场景中，可能我们真正需要使用的">
+    <meta name="keywords" content="银川煜总">
+    <meta name="description" content="Nacos的作用以及注册中心的原理">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +17,7 @@ select * from user where id=1;
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>SQL优化技巧 | 银川煜总</title>
+    <title>银川煜总</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -337,12 +335,12 @@ select * from user where id=1;
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">SQL优化技巧</h1>
+                    <h1 class="description center-align post-title"></h1>
                 </div>
             </div>
         </div>
@@ -366,8 +364,8 @@ select * from user where id=1;
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/SQL/">
-                                <span class="chip bg-color">SQL</span>
+                            <a href="/tags/SpringCloud/">
+                                <span class="chip bg-color">SpringCloud</span>
                             </a>
                         
                     </div>
@@ -378,8 +376,8 @@ select * from user where id=1;
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
-                                数据库
+                            <a href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" class="post-category">
+                                微服务
                             </a>
                         
                     </div>
@@ -391,7 +389,7 @@ select * from user where id=1;
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-10-01
+                    2023-10-02
                 </div>
                 
 
@@ -415,16 +413,7 @@ select * from user where id=1;
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="优化技巧"><a href="#优化技巧" class="headerlink" title="优化技巧"></a>优化技巧</h2><h3 id="避免使用select"><a href="#避免使用select" class="headerlink" title="**避免使用select **"></a>**避免使用select **</h3><p>很多时候，我们写sql语句时，为了方便，喜欢直接使用<code>select *</code>，一次性查出表中所有列的数据。</p>
-<p><code>select * from user where id=1;</code></p>
-<p>在实际业务场景中，可能我们真正需要使用的只有其中一两列。查了很多数据，但是不用，白白浪费了数据库资源，比如：内存或者cpu。</p>
-<p>此外，多查出来的数据，通过网络IO传输的过程中，也会增加数据传输的时间。</p>
-<p>还有一个最重要的问题是：<code>select *</code>不会走<code>覆盖索引</code>，会出现大量的<code>回表</code>操作，而从导致查询sql的性能很低。</p>
-<p>那么，如何优化呢？</p>
-<p><code>select name,age from user where id=1;</code></p>
-<p>sql语句查询时，只查需要用到的列，多余的列根本无需查出来。</p>
-<h3 id="小表驱动大表"><a href="#小表驱动大表" class="headerlink" title="小表驱动大表"></a><strong>小表驱动大表</strong></h3><p><code>select * from order</code><br><code>where user_id in (select id from user where status=1)</code></p>
-
+                <h2 id="Nacos的作用以及注册中心的原理"><a href="#Nacos的作用以及注册中心的原理" class="headerlink" title="Nacos的作用以及注册中心的原理"></a>Nacos的作用以及注册中心的原理</h2>
                 
             </div>
             <hr/>
@@ -450,7 +439,7 @@ select * from user where id=1;
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://yinchuan.work/2023/10/01/a1/">http://yinchuan.work/2023/10/01/a1/</a>
+                    <a href="http://yinchuan.work/2023/10/02/a3/">http://yinchuan.work/2023/10/02/a3/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -488,8 +477,8 @@ select * from user where id=1;
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/SQL/">
-                                    <span class="chip bg-color">SQL</span>
+                                <a href="/tags/SpringCloud/">
+                                    <span class="chip bg-color">SpringCloud</span>
                                 </a>
                             
                         </div>
@@ -572,13 +561,13 @@ select * from user where id=1;
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/10/02/a3/">
+                <a href="/2023/12/10/hello-world/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">Hello World</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -589,27 +578,15 @@ select * from user where id=1;
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-10-02
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-12-10
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" class="post-category">
-                                    微服务
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            煜总
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/SpringCloud/">
-                        <span class="chip bg-color">SpringCloud</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -621,13 +598,13 @@ select * from user where id=1;
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/08/25/a2/">
+                <a href="/2023/10/01/a1/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="标题">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="SQL优化技巧">
                         
-                        <span class="card-title">标题</span>
+                        <span class="card-title">SQL优化技巧</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -638,14 +615,14 @@ select * from user where id=1;
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-08-25
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-10-01
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%88%86%E7%B1%BB/" class="post-category">
-                                    分类
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
                                 </a>
                             
                             
@@ -655,12 +632,8 @@ select * from user where id=1;
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%A0%87%E7%AD%BE1/">
-                        <span class="chip bg-color">标签1</span>
-                    </a>
-                    
-                    <a href="/tags/%E6%A0%87%E7%AD%BE2/">
-                        <span class="chip bg-color">标签2</span>
+                    <a href="/tags/SQL/">
+                        <span class="chip bg-color">SQL</span>
                     </a>
                     
                 </div>

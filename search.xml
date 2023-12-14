@@ -17,11 +17,36 @@
     
     
     <entry>
+      <title></title>
+      <link href="/2023/10/02/a3/"/>
+      <url>/2023/10/02/a3/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Nacos的作用以及注册中心的原理"><a href="#Nacos的作用以及注册中心的原理" class="headerlink" title="Nacos的作用以及注册中心的原理"></a>Nacos的作用以及注册中心的原理</h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> 微服务 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SpringCloud </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>SQL优化技巧</title>
       <link href="/2023/10/01/a1/"/>
       <url>/2023/10/01/a1/</url>
       
-        <content type="html"><![CDATA[<h2 id="优化技巧"><a href="#优化技巧" class="headerlink" title="优化技巧"></a>优化技巧</h2><h3 id="避免使用select"><a href="#避免使用select" class="headerlink" title="**避免使用select ***"></a>**避免使用select ***</h3><p>很多时候，我们写sql语句时，为了方便，喜欢直接使用<code>select *</code>，一次性查出表中所有列的数据。</p><p><code>select * from user where id=1;</code></p><p>在实际业务场景中，可能我们真正需要使用的只有其中一两列。查了很多数据，但是不用，白白浪费了数据库资源，比如：内存或者cpu。</p><p>此外，多查出来的数据，通过网络IO传输的过程中，也会增加数据传输的时间。</p><p>还有一个最重要的问题是：<code>select *</code>不会走<code>覆盖索引</code>，会出现大量的<code>回表</code>操作，而从导致查询sql的性能很低。</p><p>那么，如何优化呢？</p><p><code>select name,age from user where id=1;</code></p><p>sql语句查询时，只查需要用到的列，多余的列根本无需查出来。</p><h3 id="小表驱动大表"><a href="#小表驱动大表" class="headerlink" title="小表驱动大表"></a><strong>小表驱动大表</strong></h3><p><code>select * from order</code><br><code>where user_id in (select id from user where status=1)</code></p>]]></content>
+        <content type="html"><![CDATA[<h2 id="优化技巧"><a href="#优化技巧" class="headerlink" title="优化技巧"></a>优化技巧</h2><h3 id="避免使用select"><a href="#避免使用select" class="headerlink" title="**避免使用select **"></a>**避免使用select **</h3><p>很多时候，我们写sql语句时，为了方便，喜欢直接使用<code>select *</code>，一次性查出表中所有列的数据。</p><p><code>select * from user where id=1;</code></p><p>在实际业务场景中，可能我们真正需要使用的只有其中一两列。查了很多数据，但是不用，白白浪费了数据库资源，比如：内存或者cpu。</p><p>此外，多查出来的数据，通过网络IO传输的过程中，也会增加数据传输的时间。</p><p>还有一个最重要的问题是：<code>select *</code>不会走<code>覆盖索引</code>，会出现大量的<code>回表</code>操作，而从导致查询sql的性能很低。</p><p>那么，如何优化呢？</p><p><code>select name,age from user where id=1;</code></p><p>sql语句查询时，只查需要用到的列，多余的列根本无需查出来。</p><h3 id="小表驱动大表"><a href="#小表驱动大表" class="headerlink" title="小表驱动大表"></a><strong>小表驱动大表</strong></h3><p><code>select * from order</code><br><code>where user_id in (select id from user where status=1)</code></p>]]></content>
       
       
       <categories>
