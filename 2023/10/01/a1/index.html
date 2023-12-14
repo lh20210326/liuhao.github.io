@@ -5,9 +5,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="SQL优化技巧, 银川煜总">
-    <meta name="description" content="优化技巧**避免使用select **很多时候，我们写sql语句时，为了方便，喜欢直接使用select *，一次性查出表中所有列的数据。
+    <meta name="description" content="优化技巧避免使用select很多时候，我们写sql语句时，为了方便，喜欢直接使用select *，一次性查出表中所有列的数据。
 select * from user where id=1;
-在实际业务场景中，可能我们真正需要使用的">
+在实际业务场景中，可能我们真正需要使用的只有其中一">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -415,7 +415,7 @@ select * from user where id=1;
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="优化技巧"><a href="#优化技巧" class="headerlink" title="优化技巧"></a>优化技巧</h2><h3 id="避免使用select"><a href="#避免使用select" class="headerlink" title="**避免使用select **"></a>**避免使用select **</h3><p>很多时候，我们写sql语句时，为了方便，喜欢直接使用<code>select *</code>，一次性查出表中所有列的数据。</p>
+                <h2 id="优化技巧"><a href="#优化技巧" class="headerlink" title="优化技巧"></a>优化技巧</h2><h3 id="避免使用select"><a href="#避免使用select" class="headerlink" title="避免使用select"></a><strong>避免使用select</strong></h3><p>很多时候，我们写sql语句时，为了方便，喜欢直接使用<code>select *</code>，一次性查出表中所有列的数据。</p>
 <p><code>select * from user where id=1;</code></p>
 <p>在实际业务场景中，可能我们真正需要使用的只有其中一两列。查了很多数据，但是不用，白白浪费了数据库资源，比如：内存或者cpu。</p>
 <p>此外，多查出来的数据，通过网络IO传输的过程中，也会增加数据传输的时间。</p>
