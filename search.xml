@@ -8,7 +8,7 @@
       <link href="/2024/01/20/a2/"/>
       <url>/2024/01/20/a2/</url>
       
-        <content type="html"><![CDATA[<p>我记得在我2020年那会，刚开始学习Linux命令的时候，要先在本地电脑下载一个虚拟机，然后在安装操作系统，接下来就很抵触Linux操作系统和Windwos操作系统操作方式和界面显示。当然随着使用频率的增加，现在也适应了这种操作方式。</p><p><img src="/images/article11.png" alt="Lena"></p>]]></content>
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我记得在我2020年那会，刚开始学习Linux命令的时候，要先在本地电脑下载一个虚拟机，然后在安装操作系统，接下来就比较抵触Linux操作系统和Windwos操作系统操作方式和界面显示。当然随着使用频率的增加，现在也适应了这种操作方式。本地虚拟机安装Linux和云服务器都用过，感觉各有优缺吧。本地不用花钱，云服务器最低配的话一年至少100块。平时学习一些小项目基本两者使用差别不大。无非是云服务器可以把项目部署上，可以远程访问。对新手来说主要问题就是vmware这种本地虚拟化软件开始会有很多坑，而这种坑对开发来讲其实是没有意义的坑。所以今天我把本地安装LInux遇到的坑总结一下，大家以后碰到了做一个参考。</p><p>本篇重点讨论问题，具体安装教程网上很多。</p><h3 id="1-先判断虚拟机是否关闭防火墙"><a href="#1-先判断虚拟机是否关闭防火墙" class="headerlink" title="1 先判断虚拟机是否关闭防火墙"></a>1 先判断虚拟机是否关闭防火墙</h3><p>查看防火墙状态<br><code>systemctl status firewalld</code><br>关闭防火墙（临时）<br><code>service iptables stop</code></p><h3 id="2然后判断虚拟机网络和vmware是否在同一个网段"><a href="#2然后判断虚拟机网络和vmware是否在同一个网段" class="headerlink" title="2然后判断虚拟机网络和vmware是否在同一个网段"></a>2然后判断虚拟机网络和vmware是否在同一个网段</h3><p>vmvare的网段</p><p><img src="/images/article11.png" alt="Lena"></p><p>通过以下命令设置Linux的ip</p><p><code>vi /etc/sysconfig/network-scripts/ifcfg-ens33</code></p><p><img src="/images/article12.png" alt="Lena"></p><p>注意看图片标识的ip，网关。</p><p>这样配置的话本地能和虚拟机互相ping通</p><p>但是虚拟机ping <a href="www.baidu.com">百度</a>有问题，还有就是使用docker，拉取镜像失败。说明不能联网。查百度发现是DNS设置有问题</p><h3 id="3配置Linux的DNS"><a href="#3配置Linux的DNS" class="headerlink" title="3配置Linux的DNS"></a>3配置Linux的DNS</h3><p><code>vi /etc/resolv.conf</code></p><p><img src="/images/article13.png" alt="Lena"></p><h3 id="问题解决："><a href="#问题解决：" class="headerlink" title="问题解决："></a>问题解决：</h3><p><img src="/images/article14.png" alt="Lena"></p><p>这样就能在linux愉快的下载各种软件了！</p><p>tip:如果克隆了相同的虚拟机，这里除了IP地址还要改一下UUID</p>]]></content>
       
       
       <categories>
@@ -48,7 +48,7 @@
       <link href="/2023/10/02/a3/"/>
       <url>/2023/10/02/a3/</url>
       
-        <content type="html"><![CDATA[<h2 id="Nacos的作用以及注册中心的原理"><a href="#Nacos的作用以及注册中心的原理" class="headerlink" title="Nacos的作用以及注册中心的原理"></a>Nacos的作用以及注册中心的原理</h2>]]></content>
+        <content type="html"><![CDATA[<h2 id="Nacos的作用以及注册中心的原理"><a href="#Nacos的作用以及注册中心的原理" class="headerlink" title="Nacos的作用以及注册中心的原理"></a>Nacos的作用以及注册中心的原理</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl status firewalld</span><br><span class="line"></span><br><span class="line">service iptables stop</span><br></pre></td></tr></table></figure>]]></content>
       
       
       <categories>
