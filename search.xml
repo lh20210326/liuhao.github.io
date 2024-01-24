@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>ruoyi导入excel数据去重</title>
+      <link href="/2024/01/24/a4/"/>
+      <url>/2024/01/24/a4/</url>
+      
+        <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>​        最近项目中用到开源平台ruoyi，有一个Excel导入功能是这样的：把excel数据导入系统，刚开始百度查方法，这个平台本来就有现成的ExcelUtil工具。把前端传来的数据直接转成List数据，然后遍历插入数据库即可。前端部分的代码，官网还是很完整的，粘贴上直接能用。</p><p><img src="/images/article15.jpg" alt="前端操作页"></p><p>​         但这样无脑导入数据，在实际应用中还是存在不完美的地方，如图有一个可选项（是否更新已经存在的用户数据），如果数据表中有已经存在的数据，那么为了避免数据重复，有一个覆盖的方案是会更合理的。</p><p>​网上疯狂的找相关的资料，但后端的代码几乎没有。没办法只能自己慢慢想，最后经过无数次修改，调试，三天时间终于有了基本能使用的效果。主要是突然想到用map集合，因为list集合里面是对象类型，对象里面才是id，刚开始只想用list集合操作，但效果都不太好，后来索性用map。key存id，value存对象值。</p><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * excel导入</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@PreAuthorize(&quot;@ss.hasPermi(&#x27;hetongq:info:ex&#x27;)&quot;)</span></span><br><span class="line">    <span class="meta">@PostMapping(&quot;/importData&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> AjaxResult <span class="title function_">importData</span><span class="params">(MultipartFile file, <span class="type">boolean</span> updateSupport)</span> <span class="keyword">throws</span> Exception</span><br><span class="line">    &#123;</span><br><span class="line"><span class="comment">//        System.out.println(updateSupport);</span></span><br><span class="line">        <span class="comment">//传来false，不更新已经存在的数据</span></span><br><span class="line">        <span class="keyword">if</span>(updateSupport==<span class="literal">false</span>)&#123;</span><br><span class="line">            ExcelUtil&lt;DanganInfo&gt; util = <span class="keyword">new</span> <span class="title class_">ExcelUtil</span>&lt;DanganInfo&gt;(DanganInfo.class);</span><br><span class="line">            List&lt;DanganInfo&gt; userList = util.importExcel(file.getInputStream());</span><br><span class="line"><span class="comment">//        System.out.println(userList);</span></span><br><span class="line">            <span class="keyword">for</span> (DanganInfo str : userList)&#123;</span><br><span class="line">                danganInfoService.insertDanganInfo(str);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//获取传来的Excel数据</span></span><br><span class="line">            ExcelUtil&lt;DanganInfo&gt; util = <span class="keyword">new</span> <span class="title class_">ExcelUtil</span>&lt;DanganInfo&gt;(DanganInfo.class);</span><br><span class="line">            List&lt;DanganInfo&gt; userList = util.importExcel(file.getInputStream());</span><br><span class="line">            <span class="comment">/*SpringSecurity工具类：获取登录用户，</span></span><br><span class="line"><span class="comment">             因为项目需求是不同用户只对自己的添加的数据</span></span><br><span class="line"><span class="comment">             有增删改查的权限,传参的时候要加上用户标识字段，</span></span><br><span class="line"><span class="comment">             这里先只分为Admin所有数据的操作权限，和其它只有自己的数据。</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            <span class="type">LoginUser</span> <span class="variable">loginUser</span> <span class="operator">=</span> SecurityUtils.getLoginUser();</span><br><span class="line">            <span class="type">String</span> <span class="variable">username</span> <span class="operator">=</span> loginUser.getUser().getUserName();</span><br><span class="line">            <span class="comment">//获取数据库的信息</span></span><br><span class="line">            <span class="type">DanganInfo</span> <span class="variable">danganInfo</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DanganInfo</span>();</span><br><span class="line">            danganInfo.setCreateby(username);</span><br><span class="line">            List&lt;DanganInfo&gt; list = danganInfoService.selectDanganInfoList(danganInfo);</span><br><span class="line">                </span><br><span class="line">            <span class="type">List</span> <span class="variable">list2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line">            <span class="comment">//Excel表的数据，list转为map，key为danganId，value是DanganInfo对象</span></span><br><span class="line">            Map&lt;String,DanganInfo&gt; map=userList.stream().collect(Collectors.toMap(DanganInfo::getDanganId, (p) -&gt; p));</span><br><span class="line">            <span class="comment">//数据库表的数据，list转为map</span></span><br><span class="line">            Map&lt;String,DanganInfo&gt; map1=list.stream().collect(Collectors.toMap(DanganInfo::getDanganId, (p) -&gt; p));</span><br><span class="line">            System.out.println(JSON.toJSONString(map));</span><br><span class="line">                <span class="comment">//遍历数据库表的danganId字段，后面要比对</span></span><br><span class="line">                <span class="keyword">for</span> (String in : map1.keySet()) &#123;</span><br><span class="line">                    list2.add(in);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//以DanganId为标准，如果相等说明Excel的数据有重复，以Excel数据为标准更新</span></span><br><span class="line">                <span class="keyword">for</span> (String in : map.keySet()) &#123;</span><br><span class="line">                    <span class="keyword">for</span> (DanganInfo info : list) &#123;</span><br><span class="line">                        <span class="keyword">if</span>(in.equals(info.getDanganId()))&#123;</span><br><span class="line">                            danganInfoService.updateDanganInfo1(map.get(in));</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//list2中是所有数据库表的DanganId字段。Excel中的字段遍历，</span></span><br><span class="line">                <span class="comment">// 如果包含Danganid，说明这个Danganid存在，不用添加，否则添加，这个逻辑慢慢体会就理解了</span></span><br><span class="line">                <span class="keyword">for</span> (String in : map.keySet()) &#123;</span><br><span class="line">                    <span class="keyword">if</span>(list2.contains(in)) &#123;</span><br><span class="line">                        System.out.println(in);</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        danganInfoService.insertDanganInfo(map.get(in));</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> AjaxResult.success(<span class="string">&quot;上传成功&quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> bug </tag>
+            
+            <tag> ruoyi </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>聊一聊Linux相关的话题</title>
       <link href="/2024/01/20/a2/"/>
       <url>/2024/01/20/a2/</url>
@@ -31,6 +58,31 @@
     
     
     <entry>
+      <title>Linux常用命令</title>
+      <link href="/2024/01/10/a3/"/>
+      <url>/2024/01/10/a3/</url>
+      
+        <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>后端开发，项目部署在Linux服务器上，所以对于开发人员，要对一般对常用的操作命令要有一定的掌握，但我觉得没必要花太多时间研究很多操作系统细节。这篇就汇总一下平时常用的，以便不时查阅。</p><p>创建多级目录文件夹（如果没有上级文件夹，要加-p）</p><p><code>mkdir -p /Users/name/docker/jenkins</code></p><p>列出当前系统中所有正在监听的端口及对应的进程。在输出结果中，我们可以找到占用目标端口的进程PID，并进一步确定该进程的详细信息</p><p><code>netstat -tlnp</code></p><p>查找文件在哪个目录</p><p><code>find / -name &quot;文件名&quot;</code></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Linux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Hello World</title>
       <link href="/2023/12/10/hello-world/"/>
       <url>/2023/12/10/hello-world/</url>
@@ -38,31 +90,6 @@
         <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * from user <span class="built_in">where</span> <span class="built_in">id</span>=1;</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">alert(&#x27;Hello World!&#x27;);</span><br><span class="line">alert(&#x27;Hello World!&#x27;);</span><br><span class="line">alert(&#x27;Hello World!&#x27;);</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;% codeblock [title] [lang:java] [url] [link text] [additional options] %&#125;</span><br><span class="line"></span><br><span class="line">code snippet</span><br><span class="line"></span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alert(&#x27;Hello World!&#x27;);</span><br></pre></td></tr></table></figure>]]></content>
       
       
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Nacos的作用以及注册中心的原理</title>
-      <link href="/2023/10/02/a3/"/>
-      <url>/2023/10/02/a3/</url>
-      
-        <content type="html"><![CDATA[<h2 id="Nacos的作用以及注册中心的原理"><a href="#Nacos的作用以及注册中心的原理" class="headerlink" title="Nacos的作用以及注册中心的原理"></a>Nacos的作用以及注册中心的原理</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl status firewalld</span><br><span class="line"></span><br><span class="line">service iptables stop</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
-      <categories>
-          
-          <category> 微服务 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> SpringCloud </tag>
-            
-        </tags>
       
     </entry>
     
