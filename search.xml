@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>重置GitLab的root用户密码</title>
+      <link href="/2024/02/03/a5/"/>
+      <url>/2024/02/03/a5/</url>
+      
+        <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>​        最近一直想通过GitLab+Jenkins+Docker做一个自动的集成部署整合，前段时间安装的GitLab的登录密码忘了，重新安装这个软件很麻烦，因为GitLab很占存储，而至于为什么用GitLab而不是Gitee，因为是用的本地服务器，而不是云服务器，如果Gitee的数据向GiteeLab发送不好搞，像搞支付流程那样内网穿透？有点麻烦吧。自己的电脑16G内存，应该勉强能带的动。参考网上的一些解决方案，更改GitLab密码方案自己总结如下。</p><h3 id="解决详细流程（亲测可用）"><a href="#解决详细流程（亲测可用）" class="headerlink" title="解决详细流程（亲测可用）"></a>解决详细流程（亲测可用）</h3><p>1 我们这个GitLab通过docker安装，所以先通过本地Linux服务器，进入到Docker内。aaf02c529d24 是这个容器的ID</p><p><code>docker exec -it aaf02c529d24 /bin/</code></p><p>2 执行以下代码，时间可能会稍长一些，出现下图标记的内容说明成功，再往下走</p><p> <code>gitlab-rails console -e production</code></p><p><img src="/images/article16.jpg" alt="图一"></p><p>3 通过命令查找，确定用户为“root”</p><p><code>user = User.find_by_username &#39;root&#39;</code></p><p><img src="/images/article17.jpg" alt="图二"></p><p>4 输入修改的密码，再确认密码</p><p><code>user.password=&quot;xxx&quot;</code></p><p><code>user.password_confirmation=&quot;xxx&quot;</code></p><p>5 保存重置信息，并结束</p><p><code>user.save!</code></p><p><code>exit</code></p><p>保存的时候报以下错误，说明你的密码太简单，比如admin这种有规律。改一下就行</p><p>Validation failed: Password must not contain commonly used combinations of words and letters (ActiveRecirb(main):013:0&gt; user.password&#x3D;</p><p>以上操作完，不用重启就能登录账号，上传代码了。push的时候我还碰到一个小问题，就是上传超时。检查发现从GitLab粘贴的http地址是错的，不是你Linux的ip地址，这个注意一下，要不然排查很久。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> git </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>ruoyi导入excel数据去重</title>
       <link href="/2024/01/24/a4/"/>
       <url>/2024/01/24/a4/</url>
@@ -62,7 +87,7 @@
       <link href="/2024/01/10/a3/"/>
       <url>/2024/01/10/a3/</url>
       
-        <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>后端开发，项目部署在Linux服务器上，所以对于开发人员，要对一般对常用的操作命令要有一定的掌握，但我觉得没必要花太多时间研究很多操作系统细节。这篇就汇总一下平时常用的，以便不时查阅。</p><p>创建多级目录文件夹（如果没有上级文件夹，要加-p）</p><p><code>mkdir -p /Users/name/docker/jenkins</code></p><p>列出当前系统中所有正在监听的端口及对应的进程。在输出结果中，我们可以找到占用目标端口的进程PID，并进一步确定该进程的详细信息</p><p><code>netstat -tlnp</code></p><p>查找文件在哪个目录</p><p><code>find / -name &quot;文件名&quot;</code></p>]]></content>
+        <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>后端开发，项目部署在Linux服务器上，所以对于开发人员，要对一般对常用的操作命令要有一定的掌握，但我觉得没必要花太多时间研究很多操作系统细节。这篇就汇总一下平时常用的，以便不时查阅。</p><p>创建多级目录文件夹（如果没有上级文件夹，要加-p）</p><p><code>mkdir -p /Users/name/docker/jenkins</code></p><p>列出当前系统中所有正在监听的端口及对应的进程。在输出结果中，我们可以找到占用目标端口的进程PID，并进一步确定该进程的详细信息</p><p><code>netstat -tlnp</code></p><p>查找文件在哪个目录</p><p><code>find / -name &quot;文件名&quot;</code></p><p>启动jar包项目，并打印日志（关闭窗口不影响项目运行）</p><p><code>nohup java -jar ruoyi-admin.jar &gt;&gt; ./info.log &amp;</code></p>]]></content>
       
       
       <categories>
@@ -87,7 +112,7 @@
       <link href="/2023/12/10/hello-world/"/>
       <url>/2023/12/10/hello-world/</url>
       
-        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * from user <span class="built_in">where</span> <span class="built_in">id</span>=1;</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">alert(&#x27;Hello World!&#x27;);</span><br><span class="line">alert(&#x27;Hello World!&#x27;);</span><br><span class="line">alert(&#x27;Hello World!&#x27;);</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;% codeblock [title] [lang:java] [url] [link text] [additional options] %&#125;</span><br><span class="line"></span><br><span class="line">code snippet</span><br><span class="line"></span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alert(&#x27;Hello World!&#x27;);</span><br></pre></td></tr></table></figure>]]></content>
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * from user <span class="built_in">where</span> <span class="built_in">id</span>=1;</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alert(&#x27;Hello World!&#x27;);</span><br><span class="line">alert(&#x27;Hello World!&#x27;);</span><br><span class="line">alert(&#x27;Hello World!&#x27;);</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock [title] [lang:java] [url] [link text] [additional options] %&#125;</span><br><span class="line"></span><br><span class="line">code snippet</span><br><span class="line"></span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alert(&#x27;Hello World!&#x27;);</span><br></pre></td></tr></table></figure>]]></content>
       
       
       
