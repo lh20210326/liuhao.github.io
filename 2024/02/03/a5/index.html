@@ -413,7 +413,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>​        最近一直想通过GitLab+Jenkins+Docker做一个自动的集成部署整合，前段时间安装的GitLab的登录密码忘了，重新安装这个软件很麻烦，因为GitLab很占存储，而至于为什么用GitLab而不是Gitee，因为是用的本地服务器，而不是云服务器，如果Gitee的数据向GiteeLab发送不好搞，像搞支付流程那样内网穿透？有点麻烦吧。自己的电脑16G内存，应该勉强能带的动。参考网上的一些解决方案，更改GitLab密码方案自己总结如下。</p>
+                <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>​        最近一直想通过GitLab+Jenkins+Docker做一个自动的集成部署整合，前段时间安装的GitLab的登录密码忘了，重新安装这个软件很麻烦，因为GitLab很占存储，而至于为什么用GitLab而不是Gitee，因为是用的本地服务器，而不是云服务器，如果Gitee的数据向本地GiteeLab发送，像搞支付流程那样内网穿透？有点麻烦吧。自己的电脑16G内存，应该勉强能带的动。参考网上的一些解决方案，更改GitLab密码方案自己总结如下。</p>
 <h3 id="解决详细流程（亲测可用）"><a href="#解决详细流程（亲测可用）" class="headerlink" title="解决详细流程（亲测可用）"></a>解决详细流程（亲测可用）</h3><p>1 我们这个GitLab通过docker安装，所以先通过本地Linux服务器，进入到Docker内。aaf02c529d24 是这个容器的ID</p>
 <p><code>docker exec -it aaf02c529d24 /bin/</code></p>
 <p>2 执行以下代码，时间可能会稍长一些，出现下图标记的内容说明成功，再往下走</p>
@@ -575,18 +575,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2024/02/03/a5/">
+                <a href="/2024/02/05/a6/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="重置GitLab的root用户密码">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="密码机对接使用总结">
                         
-                        <span class="card-title">重置GitLab的root用户密码</span>
+                        <span class="card-title">密码机对接使用总结</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -596,9 +595,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-02-03
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-02-05
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -611,12 +610,11 @@
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/git/">
-                        <span class="chip bg-color">git</span>
+                    <a href="/tags/%E5%AF%86%E7%A0%81/">
+                        <span class="chip bg-color">密码</span>
                     </a>
                     
                 </div>
