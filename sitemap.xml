@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yinchuan.work/2024/02/06/a7/</loc>
+    
+    <lastmod>2024-02-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://yinchuan.work/2024/01/24/a4/</loc>
     
     <lastmod>2024-02-08</lastmod>
@@ -119,13 +128,6 @@
 
   
   <url>
-    <loc>http://yinchuan.work/tags/SQL/</loc>
-    <lastmod>2024-02-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://yinchuan.work/tags/bug/</loc>
     <lastmod>2024-02-09</lastmod>
     <changefreq>weekly</changefreq>
@@ -134,6 +136,13 @@
   
   <url>
     <loc>http://yinchuan.work/tags/ruoyi/</loc>
+    <lastmod>2024-02-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://yinchuan.work/tags/SQL/</loc>
     <lastmod>2024-02-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -167,17 +176,24 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>http://yinchuan.work/tags/Hexo/</loc>
+    <lastmod>2024-02-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
-    <loc>http://yinchuan.work/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
+    <loc>http://yinchuan.work/categories/%E6%8A%80%E6%9C%AF/</loc>
     <lastmod>2024-02-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://yinchuan.work/categories/%E6%8A%80%E6%9C%AF/</loc>
+    <loc>http://yinchuan.work/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
     <lastmod>2024-02-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
