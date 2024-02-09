@@ -12,10 +12,10 @@ http://yinchuan.work/categories/index.html
 http://yinchuan.work/friends/index.html
 http://yinchuan.work/
 http://yinchuan.work/tags/SQL/
-http://yinchuan.work/tags/linux/
-http://yinchuan.work/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/
 http://yinchuan.work/tags/bug/
 http://yinchuan.work/tags/ruoyi/
+http://yinchuan.work/tags/linux/
+http://yinchuan.work/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/
 http://yinchuan.work/tags/git/
 http://yinchuan.work/tags/%E5%AF%86%E7%A0%81/
 http://yinchuan.work/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/
