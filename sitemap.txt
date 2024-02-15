@@ -1,10 +1,11 @@
+http://yinchuan.work/2024/02/16/a8/
+http://yinchuan.work/2024/02/03/a5/
 http://yinchuan.work/2024/02/09/a7/
 http://yinchuan.work/2024/01/24/a4/
 http://yinchuan.work/contact/index.html
 http://yinchuan.work/2024/01/10/a3/
 http://yinchuan.work/tags/index.html
 http://yinchuan.work/2024/02/05/a6/
-http://yinchuan.work/2024/02/03/a5/
 http://yinchuan.work/about/index.html
 http://yinchuan.work/2023/12/10/hello-world/
 http://yinchuan.work/2024/01/20/a2/
@@ -20,5 +21,6 @@ http://yinchuan.work/tags/ruoyi/
 http://yinchuan.work/tags/git/
 http://yinchuan.work/tags/%E5%AF%86%E7%A0%81/
 http://yinchuan.work/tags/Hexo/
+http://yinchuan.work/tags/Jenkins/
 http://yinchuan.work/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/
 http://yinchuan.work/categories/%E6%8A%80%E6%9C%AF/
