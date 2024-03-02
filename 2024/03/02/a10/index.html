@@ -530,30 +530,30 @@
         <span class="token keyword">return</span> sign<span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre><code> /**
+<pre class="line-numbers language-java"><code class="language-java"> <span class="token comment" spellcheck="true">/**
      * sm2验签，调用签名验签服务器
      * @param data  代签名的原文
      * @param singData  签名值
      * @return
-     */
-    public static boolean verifySign(byte[] data,byte[] singData)&#123;
-        // 7.2直接将证书放入验签
-        FmApi api = new FmApi();
-        String ip = &quot;xxx.xxx.xxx.xxx&quot;;
-        String[] ips = new String[1];
-        ips[0] = ip;
-        api.FM_DSVS_Connection(ips, 2024, 3);
-        System.out.println(&quot;连接成功&quot;);
-        //证书
-        String cert = &quot;xxxxxxxxxxxxxxx&quot;;
-        int state = api.FM_DSVS_VerifySignedData(1, Base64.decode(cert.getBytes()), null, data, singData, 0);
-        if (state == 0) &#123;
-            return true;
-        &#125; else &#123;
-            return false;
-        &#125;
-    &#125;
-</code></pre>
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">boolean</span> <span class="token function">verifySign</span><span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> data<span class="token punctuation">,</span><span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> singData<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 7.2直接将证书放入验签</span>
+        FmApi api <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FmApi</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        String ip <span class="token operator">=</span> <span class="token string">"xxx.xxx.xxx.xxx"</span><span class="token punctuation">;</span>
+        String<span class="token punctuation">[</span><span class="token punctuation">]</span> ips <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        ips<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> ip<span class="token punctuation">;</span>
+        api<span class="token punctuation">.</span><span class="token function">FM_DSVS_Connection</span><span class="token punctuation">(</span>ips<span class="token punctuation">,</span> <span class="token number">2024</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"连接成功"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//证书</span>
+        String cert <span class="token operator">=</span> <span class="token string">"xxxxxxxxxxxxxxx"</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> state <span class="token operator">=</span> api<span class="token punctuation">.</span><span class="token function">FM_DSVS_VerifySignedData</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> Base64<span class="token punctuation">.</span><span class="token function">decode</span><span class="token punctuation">(</span>cert<span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> null<span class="token punctuation">,</span> data<span class="token punctuation">,</span> singData<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>state <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="测试验证"><a href="#测试验证" class="headerlink" title="测试验证"></a>测试验证</h3><p>&nbsp;本地idea运行调试，在<code>File file1 = new File(absPath);</code>打断点，然后点击上传文件按钮，程序会在断点处停下。然后修改上传文件的内容，如图我是随意删除了两个字符。</p>
 <p><img src="/images/article27.png" alt="测试"></p>
 <p>前端页面会弹出“数据完整性校验失败”</p>
