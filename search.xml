@@ -29,6 +29,31 @@
     
     
     <entry>
+      <title>聊一聊设计模式</title>
+      <link href="/2024/03/01/a9/"/>
+      <url>/2024/03/01/a9/</url>
+      
+        <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>&nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;  最开始听到设计模式概念的时候，那是很久以前看视频学习框架的时候，当然是培训机构的视频课程，讲的是框架，好像是hibernate还是mybatis，具体哪个框架我忘了。当然讲的很浅，然后就是2020备战软考，一通硬灌，只记得最深的是总共23种设计模式…..现在看来学习方法完全错了，设计模式不是专门去学，而是要结合实际业务，实际项目。这个东西你起码先有些代码量，才能融汇贯通。而不是照着视频敲代码，然后再学设计模式。当然不能太急，我最大的缺点就是太急了。</p><h3 id="代码高亮显示"><a href="#代码高亮显示" class="headerlink" title="代码高亮显示"></a>代码高亮显示</h3><p>&nbsp; </p><p><img src="/images/article21.jpg" alt="原来的代码显示效果"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 设计模式 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Jenkins+GitLab自动化部署SpringBoot项目（2024版）</title>
       <link href="/2024/02/16/a8/"/>
       <url>/2024/02/16/a8/</url>
