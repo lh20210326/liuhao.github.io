@@ -439,15 +439,15 @@ openssl genrsa <span class="token punctuation">-</span>des3 <span class="token p
 //由私钥创建待签名证书
 openssl.exe req <span class="token punctuation">-</span>new <span class="token punctuation">-</span>key c<span class="token punctuation">:</span>/dev/server.key <span class="token punctuation">-</span>out c<span class="token punctuation">:</span>/dev/pub.csr
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="创建一个CA机构"><a href="#创建一个CA机构" class="headerlink" title="创建一个CA机构"></a>创建一个CA机构</h4><pre><code>//生成CA私钥
-openssl.exe genrsa -out c:/dev/myca.key 2048
+<h4 id="创建一个CA机构"><a href="#创建一个CA机构" class="headerlink" title="创建一个CA机构"></a>创建一个CA机构</h4><pre class="line-numbers language-yaml"><code class="language-yaml">//生成CA私钥
+openssl.exe genrsa <span class="token punctuation">-</span>out c<span class="token punctuation">:</span>/dev/myca.key 2048
 //生成CA代签名证书
-openssl.exe req -new -key c:/dev/myca.key -out c:/dev/myca.csr
+openssl.exe req <span class="token punctuation">-</span>new <span class="token punctuation">-</span>key c<span class="token punctuation">:</span>/dev/myca.key <span class="token punctuation">-</span>out c<span class="token punctuation">:</span>/dev/myca.csr
 //生成CA根证书
-openssl.exe x509 -req -in c:/dev/myca.csr -extensions v3_ca -signkey c:/dev/myca.key -out c:/dev/myca.crt
+openssl.exe x509 <span class="token punctuation">-</span>req <span class="token punctuation">-</span>in c<span class="token punctuation">:</span>/dev/myca.csr <span class="token punctuation">-</span>extensions v3_ca <span class="token punctuation">-</span>signkey c<span class="token punctuation">:</span>/dev/myca.key <span class="token punctuation">-</span>out c<span class="token punctuation">:</span>/dev/myca.crt
 //对服务器证书签名
-openssl x509 -days 365 -req -in c:/dev/pub.csr -extensions v3_req -CAkey c:/dev/myca.key -CA c:/dev/myca.crt -CAcreateserial -out c:/dev/server.crt
-</code></pre>
+openssl x509 <span class="token punctuation">-</span>days 365 <span class="token punctuation">-</span>req <span class="token punctuation">-</span>in c<span class="token punctuation">:</span>/dev/pub.csr <span class="token punctuation">-</span>extensions v3_req <span class="token punctuation">-</span>CAkey c<span class="token punctuation">:</span>/dev/myca.key <span class="token punctuation">-</span>CA c<span class="token punctuation">:</span>/dev/myca.crt <span class="token punctuation">-</span>CAcreateserial <span class="token punctuation">-</span>out c<span class="token punctuation">:</span>/dev/server.crt
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>参考资料：</p>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV16x4y1u7T4/?spm_id_from=333.788&vd_source=7a3d5cd3fa11ce74c3a55924dc40fe84">https://www.bilibili.com/video/BV16x4y1u7T4/?spm_id_from=333.788&amp;vd_source=7a3d5cd3fa11ce74c3a55924dc40fe84</a></p>
 <p><img src="/images/article28.jpg" alt="业务流程"></p>
