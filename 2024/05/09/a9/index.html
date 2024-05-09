@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="用Openssl生成可靠的CA证书使网址http变https, 银川煜总博客">
-    <meta name="description" content="前言&amp;nbsp;&amp;nbsp; &amp;nbsp;&amp;nbsp;项目的访问首页，原来做的是http访问，现在要https也能访问。看似好像就添加个“s”，实际上搞起来还是费点事。大概2年前买了云服务器的时候，做过类的的，但那个时候是云服务器，证书什么">
+    <meta name="keywords" content="国密Nginx服务器部署, 银川煜总博客">
+    <meta name="description" content="前言&amp;nbsp;&amp;nbsp;  &amp;nbsp; &amp;nbsp; &amp;nbsp; 有段时间没写博客了，现在有个这样的任务：系统原来的Https加密算法不是用的国密算法，现在要改为国密。有了之前OpenSSL生成证书和密钥的经验，我感觉不难，但今天实">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>用Openssl生成可靠的CA证书使网址http变https | 银川煜总博客</title>
+    <title>国密Nginx服务器部署 | 银川煜总博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -337,12 +337,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">用Openssl生成可靠的CA证书使网址http变https</h1>
+                    <h1 class="description center-align post-title">国密Nginx服务器部署</h1>
                 </div>
             </div>
         </div>
@@ -370,10 +370,6 @@
                                 <span class="chip bg-color">密码</span>
                             </a>
                         
-                            <a href="/tags/Nginx/">
-                                <span class="chip bg-color">Nginx</span>
-                            </a>
-                        
                     </div>
                     
                 </div>
@@ -395,7 +391,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-03-24
+                    2024-05-09
                 </div>
                 
 
@@ -404,7 +400,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    983
+                    701
                 </div>
                 
 
@@ -429,67 +425,77 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>&nbsp;&nbsp; &nbsp;&nbsp;项目的访问首页，原来做的是http访问，现在要https也能访问。看似好像就添加个“s”，实际上搞起来还是费点事。大概2年前买了云服务器的时候，做过类的的，但那个时候是云服务器，证书什么的厂家提供，再加上时间也过去很久，很多东西都忘了。</p>
-<h3 id="OpenSSL生成证书"><a href="#OpenSSL生成证书" class="headerlink" title="OpenSSL生成证书"></a>OpenSSL生成证书</h3><p> &nbsp;公司这边当时提供了cfssl的证书生成文档，但官网不好找，用linux下载安装包还特别慢。好不容易下载上，对服务器证书签名又出现问题。无奈之下最后改用OpenSSL，因为搜寻b站找资料，看到有up主用到这个工具，讲的还不错。就改用这个。算是踩坑了吧。</p>
-<h4 id="下载OpenSSL"><a href="#下载OpenSSL" class="headerlink" title="下载OpenSSL"></a>下载OpenSSL</h4><p><a target="_blank" rel="noopener" href="https://slproweb.com/products.html">https://slproweb.com/products.html</a> 这是官网下载地址，   有linux和win两个版本，我下载的win版本</p>
-<h4 id="安装OpenSSL"><a href="#安装OpenSSL" class="headerlink" title="安装OpenSSL"></a>安装OpenSSL</h4><p>windows安装直接无脑默认下一步，我的默认安装路径是（C:\Program Files\OpenSSL-Win64\bin）</p>
-<h4 id="在Win生成证书"><a href="#在Win生成证书" class="headerlink" title="在Win生成证书"></a>在Win生成证书</h4><p>在OpenSSL默认路径bin目录下cmd，输入以下命令，c盘dev文件夹生成对应文件</p>
-<pre class="line-numbers language-yaml"><code class="language-yaml">//生成私钥.key
-openssl genrsa <span class="token punctuation">-</span>des3 <span class="token punctuation">-</span>out c<span class="token punctuation">:</span>/dev/server.key
-//由私钥创建待签名证书
-openssl.exe req <span class="token punctuation">-</span>new <span class="token punctuation">-</span>key c<span class="token punctuation">:</span>/dev/server.key <span class="token punctuation">-</span>out c<span class="token punctuation">:</span>/dev/pub.csr
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="创建一个CA机构"><a href="#创建一个CA机构" class="headerlink" title="创建一个CA机构"></a>创建一个CA机构</h4><pre class="line-numbers language-yaml"><code class="language-yaml">//生成CA私钥
-openssl.exe genrsa <span class="token punctuation">-</span>out c<span class="token punctuation">:</span>/dev/myca.key 2048
-//生成CA代签名证书
-openssl.exe req <span class="token punctuation">-</span>new <span class="token punctuation">-</span>key c<span class="token punctuation">:</span>/dev/myca.key <span class="token punctuation">-</span>out c<span class="token punctuation">:</span>/dev/myca.csr
-//生成CA根证书
-openssl.exe x509 <span class="token punctuation">-</span>req <span class="token punctuation">-</span>in c<span class="token punctuation">:</span>/dev/myca.csr <span class="token punctuation">-</span>extensions v3_ca <span class="token punctuation">-</span>signkey c<span class="token punctuation">:</span>/dev/myca.key <span class="token punctuation">-</span>out c<span class="token punctuation">:</span>/dev/myca.crt
-//对服务器证书签名
-openssl x509 <span class="token punctuation">-</span>days 365 <span class="token punctuation">-</span>req <span class="token punctuation">-</span>in c<span class="token punctuation">:</span>/dev/pub.csr <span class="token punctuation">-</span>extensions v3_req <span class="token punctuation">-</span>CAkey c<span class="token punctuation">:</span>/dev/myca.key <span class="token punctuation">-</span>CA c<span class="token punctuation">:</span>/dev/myca.crt <span class="token punctuation">-</span>CAcreateserial <span class="token punctuation">-</span>out c<span class="token punctuation">:</span>/dev/server.crt
+                <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>&nbsp;&nbsp;  &nbsp; &nbsp; &nbsp; 有段时间没写博客了，现在有个这样的任务：系统原来的Https加密算法不是用的国密算法，现在要改为国密。有了之前OpenSSL生成证书和密钥的经验，我感觉不难，但今天实际操作，也踩了不少坑。</p>
+<h3 id="准备环境"><a href="#准备环境" class="headerlink" title="准备环境"></a>准备环境</h3><p>这里要准备国密浏览器（奇安信浏览器），国密OpenSSL与国密Nginx。这些可看我的<strong>参考资料</strong>，然后找到下载地址。还有最好先找一个比较干净的centos环境，在nginx上测试，如果没问题，然后再修改系统的nginx配置。</p>
+<h3 id="在Nginx上编译部署"><a href="#在Nginx上编译部署" class="headerlink" title="在Nginx上编译部署"></a>在Nginx上编译部署</h3><ol>
+<li>下载gmssl_openssl_1.1_bxx.tar.gz到&#x2F;root&#x2F;下</li>
+<li>解压 tar xzfm gmssl_openssl_1.1_bxx.tar.gz -C &#x2F;usr&#x2F;local</li>
+<li>下载<a target="_blank" rel="noopener" href="http://nginx.org/download/nginx-1.24.0.tar.gz">nginx-1.24.0.tar.gz</a>到&#x2F;root&#x2F;下</li>
+<li>解压 tar xzfm nginx-1.24.0.tar.gz</li>
+<li>进入目录 cd &#x2F;root&#x2F;nginx-1.24.0</li>
+<li>编辑auto&#x2F;lib&#x2F;openssl&#x2F;conf，将全部$OPENSSL&#x2F;.openssl&#x2F;修改为$OPENSSL&#x2F;并保存</li>
+<li>编译配置</li>
+</ol>
+<pre class="line-numbers language-yaml"><code class="language-yaml">./configure \
+<span class="token punctuation">-</span><span class="token punctuation">-</span>without<span class="token punctuation">-</span>http_gzip_module \
+<span class="token punctuation">-</span><span class="token punctuation">-</span>with<span class="token punctuation">-</span>http_ssl_module \
+<span class="token punctuation">-</span><span class="token punctuation">-</span>with<span class="token punctuation">-</span>http_stub_status_module \
+<span class="token punctuation">-</span><span class="token punctuation">-</span>with<span class="token punctuation">-</span>http_v2_module \
+<span class="token punctuation">-</span><span class="token punctuation">-</span>with<span class="token punctuation">-</span>stream \
+<span class="token punctuation">-</span><span class="token punctuation">-</span>with<span class="token punctuation">-</span>file<span class="token punctuation">-</span>aio \
+<span class="token punctuation">-</span><span class="token punctuation">-</span>with<span class="token punctuation">-</span>openssl="/usr/local/gmssl"
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>参考资料：</p>
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV16x4y1u7T4/?spm_id_from=333.788&vd_source=7a3d5cd3fa11ce74c3a55924dc40fe84">https://www.bilibili.com/video/BV16x4y1u7T4/?spm_id_from=333.788&amp;vd_source=7a3d5cd3fa11ce74c3a55924dc40fe84</a></p>
-<h3 id="Nginx配置"><a href="#Nginx配置" class="headerlink" title="Nginx配置"></a>Nginx配置</h3><p>在nginx配置文件：nginx.conf加入下面配置</p>
+<ol start="8">
+<li>编译安装<br>make install</li>
+<li>&#x2F;usr&#x2F;local&#x2F;nginx即为生成的nginx目录</li>
+</ol>
+<h3 id="配置示例"><a href="#配置示例" class="headerlink" title="配置示例"></a>配置示例</h3><p>与之前不同的是，在国密实验室生成证书，然后在服务器放入证书，如下示例：keystore&#x2F;是文件夹，sm2.demo1.gmssl.cn.sig.crt.pem是文件名。</p>
+<p>测试证书使用<a target="_blank" rel="noopener" href="https://www.gmcrt.cn/">www.gmcrt.cn</a>签发。</p>
 <pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># https 服务配置</span>
-    server <span class="token punctuation">{</span>
-        listen 443 default ssl;
-        ssl on;
-        ssl_certificate      /opt/cert/server.crt;
-        ssl_certificate_key  /opt/cert/server.key;
-        server_name localhost;
-        location / <span class="token punctuation">{</span>
-            root   /usr/local/nginx/html/dist;
-            try_files $uri $uri/ /index.html;
-            index  index.html index.htm;
-            
-        <span class="token punctuation">}</span>
-        location /prod<span class="token punctuation">-</span>api/ <span class="token punctuation">{</span>
-            proxy_set_header Host $http_host;
-            proxy_set_header X<span class="token punctuation">-</span>Real<span class="token punctuation">-</span>IP $remote_addr;
-            proxy_set_header REMOTE<span class="token punctuation">-</span>HOST $remote_addr;
-            proxy_set_header X<span class="token punctuation">-</span>Forwarded<span class="token punctuation">-</span>For $proxy_add_x_forwarded_for;
-            proxy_pass http<span class="token punctuation">:</span>//localhost<span class="token punctuation">:</span>8080/;
-        <span class="token punctuation">}</span>
-
-        error_page   500 502 503 504  /50x.html;
-        location = /50x.html <span class="token punctuation">{</span>
-            root   html;
-        <span class="token punctuation">}</span>
-        
-    <span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="添加SSL支持"><a href="#添加SSL支持" class="headerlink" title="添加SSL支持"></a>添加SSL支持</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/H900302/article/details/120825981">https://blog.csdn.net/H900302/article/details/120825981</a></p>
-<p>这篇博客讲的细节很到位！</p>
-<h4 id="查日志看出问题"><a href="#查日志看出问题" class="headerlink" title="查日志看出问题"></a>查日志看出问题</h4><p>&nbsp;但在这里有一个很恶心的bug，那就是上面配置文件没有问题，但报错nginx访问404，notfound。然后我就一直百度，反复改配置文件的内容，一直以为配置文件出问题，改了配置文件很多地方没有解决。直到最后查了一下nginx的error.log日志文件，发现访问路径似曾相识。”&#x2F;home&#x2F;ruoyi&#x2F;projects&#x2F;static-web&#x2F;index.html”，这个路径不是和ruoyi官网默认的路径很相似？于是按照网站的操作：通过make模板进行编译，新的nginx文件覆盖旧的文件，然后重启奇迹出现，访问成功！这里覆盖旧文件的底层原理我不清楚，但真的坑啊。</p>
-<pre class="line-numbers language-yaml"><code class="language-yaml">2024/03/24 21<span class="token punctuation">:</span>25<span class="token punctuation">:</span>08 <span class="token punctuation">[</span>error<span class="token punctuation">]</span> 17506<span class="token comment" spellcheck="true">#0: *371 "/home/ruoyi/projects/static-web/index.html" is not found (2: No such file or directory), client: 192.168.10.212, server: localhost, request: "GET / HTTP/1.1", host: "192.168.10.195"</span>
-2024/03/24 21<span class="token punctuation">:</span>32<span class="token punctuation">:</span>54 <span class="token punctuation">[</span>error<span class="token punctuation">]</span> 17506<span class="token comment" spellcheck="true">#0: *375 "/home/ruoyi/projects/static-web/index.html" is not found (2: No such file or directory), client: 192.168.10.212, server: localhost, request: "GET / HTTP/1.1", host: "192.168.10.195"</span>
-2024/03/24 21<span class="token punctuation">:</span>37<span class="token punctuation">:</span>50 <span class="token punctuation">[</span>error<span class="token punctuation">]</span> 17506<span class="token comment" spellcheck="true">#0: *381 "/home/ruoyi/projects/static-web/index.html" is not found (2: No such file or directory), client: 192.168.10.212, server: localhost, request: "GET / HTTP/1.1", host: "192.168.10.195"</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>参考资料：</p>
-<p><a target="_blank" rel="noopener" href="https://doc.ruoyi.vip/ruoyi/other/faq.html#%E5%A6%82%E4%BD%95%E9%83%A8%E7%BD%B2%E9%85%8D%E7%BD%AE%E6%94%AF%E6%8C%81https%E8%AE%BF%E9%97%AE">https://doc.ruoyi.vip/ruoyi/other/faq.html#%E5%A6%82%E4%BD%95%E9%83%A8%E7%BD%B2%E9%85%8D%E7%BD%AE%E6%94%AF%E6%8C%81https%E8%AE%BF%E9%97%AE</a></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>&nbsp;这次这个问题解决起来也是花了些时间，但还好最终解决，要不然心情就比较沮丧了。</p>
-<p>&nbsp;</p>
+server
+<span class="token punctuation">{</span>
+  listen       443 ssl;;
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  ssl_ciphers ECDHE<span class="token punctuation">-</span>RSA<span class="token punctuation">-</span>AES128<span class="token punctuation">-</span>GCM<span class="token punctuation">-</span>SHA256<span class="token punctuation">:</span>AES128<span class="token punctuation">-</span>SHA<span class="token punctuation">:</span>DES<span class="token punctuation">-</span>CBC3<span class="token punctuation">-</span>SHA<span class="token punctuation">:</span>ECC<span class="token punctuation">-</span>SM4<span class="token punctuation">-</span>CBC<span class="token punctuation">-</span>SM3<span class="token punctuation">:</span>ECC<span class="token punctuation">-</span>SM4<span class="token punctuation">-</span>GCM<span class="token punctuation">-</span>SM3;
+  ssl_verify_client off;
+  
+  ssl_certificate keystore/sm2.demo1.gmssl.cn.sig.crt.pem;
+  ssl_certificate_key keystore/sm2.demo1.gmssl.cn.sig.key.pem;
+  
+  ssl_certificate keystore/sm2.demo1.gmssl.cn.enc.crt.pem;
+  ssl_certificate_key keystore/sm2.demo1.gmssl.cn.enc.key.pem;
+  
+  location /
+  <span class="token punctuation">{</span>
+    root html;
+    index index.html index.htm;
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="/images/article30.jpg" alt="启动nginx"></p>
+<h3 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h3><p>csdn文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/new9232/article/details/134562784">https://blog.csdn.net/new9232/article/details/134562784</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.gmssl.cn/gmssl/index.jsp">国密SSL实验室：</a></p>
+<h4 id="CentOS7升级OpenSSL版本"><a href="#CentOS7升级OpenSSL版本" class="headerlink" title="CentOS7升级OpenSSL版本"></a>CentOS7升级OpenSSL版本</h4><p>1、查看linux服务器内核版本</p>
+<p>   cat &#x2F;proc&#x2F;version</p>
+<p>2、查看本地OpenSSL版本</p>
+<p>   openssl version</p>
+<p>   如果不是最新的openSSL 1.1.1版本，则可以进行升级</p>
+<p>   下载最新的openssl版本</p>
+<p>   wget <a target="_blank" rel="noopener" href="https://www.openssl.org/source/openssl-1.1.1c.tar.gz">https://www.openssl.org/source/openssl-1.1.1c.tar.gz</a></p>
+<p>   或者</p>
+<p>   外网下载openssl-1.1.1c.tar.gz安装包，然后拷贝到服务器上</p>
+<p>3、解压并编译安装</p>
+<p>   tar -zxvf openssl-1.1.1c.tar.gz</p>
+<p>   cd openssl-1.1.1c</p>
+<p>   .&#x2F;config –prefix&#x3D;&#x2F;usr&#x2F;local&#x2F;openssl   #如果此步骤报错,需要安装perl以及gcc包</p>
+<p>   make &amp;&amp; make install</p>
+<p>   mv &#x2F;usr&#x2F;bin&#x2F;openssl &#x2F;usr&#x2F;bin&#x2F;openssl.bak</p>
+<p>   ln -sf &#x2F;usr&#x2F;local&#x2F;openssl&#x2F;bin&#x2F;openssl &#x2F;usr&#x2F;bin&#x2F;openssl</p>
+<p>   echo “&#x2F;usr&#x2F;local&#x2F;openssl&#x2F;lib” &gt;&gt; &#x2F;etc&#x2F;ld.so.conf</p>
+<p>   ldconfig -v                    # 设置生效</p>
+<p>4、查看本地OpenSSL版本</p>
+<p>   openssl version</p>
+<p>   如果是最新的openSSL 1.1.1版本,则说明升级成功<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/CDKingHang/article/details/132525535">https://blog.csdn.net/CDKingHang/article/details/132525535</a></p>
 
                 
             </div>
@@ -516,7 +522,7 @@ openssl x509 <span class="token punctuation">-</span>days 365 <span class="token
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://yinchuan.work/2024/03/24/a12/">http://yinchuan.work/2024/03/24/a12/</a>
+                    <a href="http://yinchuan.work/2024/05/09/a9/">http://yinchuan.work/2024/05/09/a9/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -556,10 +562,6 @@ openssl x509 <span class="token punctuation">-</span>days 365 <span class="token
                             
                                 <a href="/tags/%E5%AF%86%E7%A0%81/">
                                     <span class="chip bg-color">密码</span>
-                                </a>
-                            
-                                <a href="/tags/Nginx/">
-                                    <span class="chip bg-color">Nginx</span>
                                 </a>
                             
                         </div>
@@ -638,9 +640,10 @@ openssl x509 <span class="token punctuation">-</span>days 365 <span class="token
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2024/05/09/a9/">
                     <div class="card-image">
@@ -658,9 +661,59 @@ openssl x509 <span class="token punctuation">-</span>days 365 <span class="token
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-05-09
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-05-09
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%8A%80%E6%9C%AF/" class="post-category">
+                                    技术
+                                </a>
+                            
+                            
                         </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%AF%86%E7%A0%81/">
+                        <span class="chip bg-color">密码</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2024/03/24/a12/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="用Openssl生成可靠的CA证书使网址http变https">
+                        
+                        <span class="card-title">用Openssl生成可靠的CA证书使网址http变https</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-24
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -680,53 +733,8 @@ openssl x509 <span class="token punctuation">-</span>days 365 <span class="token
                         <span class="chip bg-color">密码</span>
                     </a>
                     
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2024/03/14/a11/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="用ukey登录系统">
-                        
-                        <span class="card-title">用ukey登录系统</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-14
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%8A%80%E6%9C%AF/" class="post-category">
-                                    技术
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E5%AF%86%E7%A0%81/">
-                        <span class="chip bg-color">密码</span>
+                    <a href="/tags/Nginx/">
+                        <span class="chip bg-color">Nginx</span>
                     </a>
                     
                 </div>
