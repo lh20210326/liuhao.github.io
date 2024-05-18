@@ -1,7 +1,8 @@
+http://yinchuan.work/2024/05/09/a9/
 http://yinchuan.work/2024/03/24/a12%20-%20%E5%89%AF%E6%9C%AC%20(2)/
+http://yinchuan.work/2024/03/24/a12%20-%20%E5%89%AF%E6%9C%AC%20(2)%20-%20%E5%89%AF%E6%9C%AC/
 http://yinchuan.work/2024/03/24/a12%20-%20%E5%89%AF%E6%9C%AC/
 http://yinchuan.work/2024/03/24/a12/
-http://yinchuan.work/2024/03/24/a12%20-%20%E5%89%AF%E6%9C%AC%20(2)%20-%20%E5%89%AF%E6%9C%AC/
 http://yinchuan.work/2024/03/14/a11/
 http://yinchuan.work/2024/03/02/a10/
 http://yinchuan.work/2024/02/16/a8/
@@ -23,9 +24,9 @@ http://yinchuan.work/tags/%E5%AF%86%E7%A0%81/
 http://yinchuan.work/tags/Nginx/
 http://yinchuan.work/tags/linux/
 http://yinchuan.work/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/
-http://yinchuan.work/tags/git/
 http://yinchuan.work/tags/bug/
 http://yinchuan.work/tags/ruoyi/
+http://yinchuan.work/tags/git/
 http://yinchuan.work/tags/Hexo/
 http://yinchuan.work/tags/Jenkins/
 http://yinchuan.work/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/
