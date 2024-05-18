@@ -3,9 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Linux常用命令, 银川煜总博客">
-    <meta name="description" content="前言后端开发，项目部署在Linux服务器上，所以对于开发人员，要对一般对常用的操作命令要有一定的掌握，但我觉得没必要花太多时间研究很多操作系统细节。这篇就汇总一下平时常用的，以便不时查阅。
-创建多级目录文件夹（如果没有上级文件夹，要加-p）">
+    <meta name="keywords" content="用Openssl生成可靠的CA证书使网址http变https, 银川煜总博客">
+    <meta name="description" content="前言&amp;nbsp;&amp;nbsp; &amp;nbsp;&amp;nbsp;项目的访问首页，原来做的是http访问，现在要https也能访问。看似好像就添加个“s”，实际上搞起来还是费点事。大概2年前买了云服务器的时候，做过类的的，但那个时候是云服务器，证书什么">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Linux常用命令 | 银川煜总博客</title>
+    <title>用Openssl生成可靠的CA证书使网址http变https | 银川煜总博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -338,12 +337,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Linux常用命令</h1>
+                    <h1 class="description center-align post-title">用Openssl生成可靠的CA证书使网址http变https</h1>
                 </div>
             </div>
         </div>
@@ -367,8 +366,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/linux/">
-                                <span class="chip bg-color">linux</span>
+                            <a href="/tags/%E5%AF%86%E7%A0%81/">
+                                <span class="chip bg-color">密码</span>
+                            </a>
+                        
+                            <a href="/tags/Nginx/">
+                                <span class="chip bg-color">Nginx</span>
                             </a>
                         
                     </div>
@@ -392,7 +395,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-01-10
+                    2024-03-24
                 </div>
                 
 
@@ -401,7 +404,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    219
+                    983
                 </div>
                 
 
@@ -426,15 +429,67 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>后端开发，项目部署在Linux服务器上，所以对于开发人员，要对一般对常用的操作命令要有一定的掌握，但我觉得没必要花太多时间研究很多操作系统细节。这篇就汇总一下平时常用的，以便不时查阅。</p>
-<p>创建多级目录文件夹（如果没有上级文件夹，要加-p）</p>
-<p><code>mkdir -p /Users/name/docker/jenkins</code></p>
-<p>列出当前系统中所有正在监听的端口及对应的进程。在输出结果中，我们可以找到占用目标端口的进程PID，并进一步确定该进程的详细信息</p>
-<p><code>netstat -tlnp</code></p>
-<p>查找文件在哪个目录</p>
-<p><code>find / -name &quot;文件名&quot;</code></p>
-<p>启动jar包项目，并打印日志（关闭窗口不影响项目运行）</p>
-<p><code>nohup java -jar ruoyi-admin.jar &gt;&gt; ./info.log &amp;</code></p>
+                <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>&nbsp;&nbsp; &nbsp;&nbsp;项目的访问首页，原来做的是http访问，现在要https也能访问。看似好像就添加个“s”，实际上搞起来还是费点事。大概2年前买了云服务器的时候，做过类的的，但那个时候是云服务器，证书什么的厂家提供，再加上时间也过去很久，很多东西都忘了。</p>
+<h3 id="OpenSSL生成证书"><a href="#OpenSSL生成证书" class="headerlink" title="OpenSSL生成证书"></a>OpenSSL生成证书</h3><p> &nbsp;公司这边当时提供了cfssl的证书生成文档，但官网不好找，用linux下载安装包还特别慢。好不容易下载上，对服务器证书签名又出现问题。无奈之下最后改用OpenSSL，因为搜寻b站找资料，看到有up主用到这个工具，讲的还不错。就改用这个。算是踩坑了吧。</p>
+<h4 id="下载OpenSSL"><a href="#下载OpenSSL" class="headerlink" title="下载OpenSSL"></a>下载OpenSSL</h4><p><a target="_blank" rel="noopener" href="https://slproweb.com/products.html">https://slproweb.com/products.html</a> 这是官网下载地址，   有linux和win两个版本，我下载的win版本</p>
+<h4 id="安装OpenSSL"><a href="#安装OpenSSL" class="headerlink" title="安装OpenSSL"></a>安装OpenSSL</h4><p>windows安装直接无脑默认下一步，我的默认安装路径是（C:\Program Files\OpenSSL-Win64\bin）</p>
+<h4 id="在Win生成证书"><a href="#在Win生成证书" class="headerlink" title="在Win生成证书"></a>在Win生成证书</h4><p>在OpenSSL默认路径bin目录下cmd，输入以下命令，c盘dev文件夹生成对应文件</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml">//生成私钥.key
+openssl genrsa <span class="token punctuation">-</span>des3 <span class="token punctuation">-</span>out c<span class="token punctuation">:</span>/dev/server.key
+//由私钥创建待签名证书
+openssl.exe req <span class="token punctuation">-</span>new <span class="token punctuation">-</span>key c<span class="token punctuation">:</span>/dev/server.key <span class="token punctuation">-</span>out c<span class="token punctuation">:</span>/dev/pub.csr
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="创建一个CA机构"><a href="#创建一个CA机构" class="headerlink" title="创建一个CA机构"></a>创建一个CA机构</h4><pre class="line-numbers language-yaml"><code class="language-yaml">//生成CA私钥
+openssl.exe genrsa <span class="token punctuation">-</span>out c<span class="token punctuation">:</span>/dev/myca.key 2048
+//生成CA代签名证书
+openssl.exe req <span class="token punctuation">-</span>new <span class="token punctuation">-</span>key c<span class="token punctuation">:</span>/dev/myca.key <span class="token punctuation">-</span>out c<span class="token punctuation">:</span>/dev/myca.csr
+//生成CA根证书
+openssl.exe x509 <span class="token punctuation">-</span>req <span class="token punctuation">-</span>in c<span class="token punctuation">:</span>/dev/myca.csr <span class="token punctuation">-</span>extensions v3_ca <span class="token punctuation">-</span>signkey c<span class="token punctuation">:</span>/dev/myca.key <span class="token punctuation">-</span>out c<span class="token punctuation">:</span>/dev/myca.crt
+//对服务器证书签名
+openssl x509 <span class="token punctuation">-</span>days 365 <span class="token punctuation">-</span>req <span class="token punctuation">-</span>in c<span class="token punctuation">:</span>/dev/pub.csr <span class="token punctuation">-</span>extensions v3_req <span class="token punctuation">-</span>CAkey c<span class="token punctuation">:</span>/dev/myca.key <span class="token punctuation">-</span>CA c<span class="token punctuation">:</span>/dev/myca.crt <span class="token punctuation">-</span>CAcreateserial <span class="token punctuation">-</span>out c<span class="token punctuation">:</span>/dev/server.crt
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>参考资料：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV16x4y1u7T4/?spm_id_from=333.788&vd_source=7a3d5cd3fa11ce74c3a55924dc40fe84">https://www.bilibili.com/video/BV16x4y1u7T4/?spm_id_from=333.788&amp;vd_source=7a3d5cd3fa11ce74c3a55924dc40fe84</a></p>
+<h3 id="Nginx配置"><a href="#Nginx配置" class="headerlink" title="Nginx配置"></a>Nginx配置</h3><p>在nginx配置文件：nginx.conf加入下面配置</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># https 服务配置</span>
+    server <span class="token punctuation">{</span>
+        listen 443 default ssl;
+        ssl on;
+        ssl_certificate      /opt/cert/server.crt;
+        ssl_certificate_key  /opt/cert/server.key;
+        server_name localhost;
+        location / <span class="token punctuation">{</span>
+            root   /usr/local/nginx/html/dist;
+            try_files $uri $uri/ /index.html;
+            index  index.html index.htm;
+            
+        <span class="token punctuation">}</span>
+        location /prod<span class="token punctuation">-</span>api/ <span class="token punctuation">{</span>
+            proxy_set_header Host $http_host;
+            proxy_set_header X<span class="token punctuation">-</span>Real<span class="token punctuation">-</span>IP $remote_addr;
+            proxy_set_header REMOTE<span class="token punctuation">-</span>HOST $remote_addr;
+            proxy_set_header X<span class="token punctuation">-</span>Forwarded<span class="token punctuation">-</span>For $proxy_add_x_forwarded_for;
+            proxy_pass http<span class="token punctuation">:</span>//localhost<span class="token punctuation">:</span>8080/;
+        <span class="token punctuation">}</span>
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html <span class="token punctuation">{</span>
+            root   html;
+        <span class="token punctuation">}</span>
+        
+    <span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="添加SSL支持"><a href="#添加SSL支持" class="headerlink" title="添加SSL支持"></a>添加SSL支持</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/H900302/article/details/120825981">https://blog.csdn.net/H900302/article/details/120825981</a></p>
+<p>这篇博客讲的细节很到位！</p>
+<h4 id="查日志看出问题"><a href="#查日志看出问题" class="headerlink" title="查日志看出问题"></a>查日志看出问题</h4><p>&nbsp;但在这里有一个很恶心的bug，那就是上面配置文件没有问题，但报错nginx访问404，notfound。然后我就一直百度，反复改配置文件的内容，一直以为配置文件出问题，改了配置文件很多地方没有解决。直到最后查了一下nginx的error.log日志文件，发现访问路径似曾相识。”&#x2F;home&#x2F;ruoyi&#x2F;projects&#x2F;static-web&#x2F;index.html”，这个路径不是和ruoyi官网默认的路径很相似？于是按照网站的操作：通过make模板进行编译，新的nginx文件覆盖旧的文件，然后重启奇迹出现，访问成功！这里覆盖旧文件的底层原理我不清楚，但真的坑啊。</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml">2024/03/24 21<span class="token punctuation">:</span>25<span class="token punctuation">:</span>08 <span class="token punctuation">[</span>error<span class="token punctuation">]</span> 17506<span class="token comment" spellcheck="true">#0: *371 "/home/ruoyi/projects/static-web/index.html" is not found (2: No such file or directory), client: 192.168.10.212, server: localhost, request: "GET / HTTP/1.1", host: "192.168.10.195"</span>
+2024/03/24 21<span class="token punctuation">:</span>32<span class="token punctuation">:</span>54 <span class="token punctuation">[</span>error<span class="token punctuation">]</span> 17506<span class="token comment" spellcheck="true">#0: *375 "/home/ruoyi/projects/static-web/index.html" is not found (2: No such file or directory), client: 192.168.10.212, server: localhost, request: "GET / HTTP/1.1", host: "192.168.10.195"</span>
+2024/03/24 21<span class="token punctuation">:</span>37<span class="token punctuation">:</span>50 <span class="token punctuation">[</span>error<span class="token punctuation">]</span> 17506<span class="token comment" spellcheck="true">#0: *381 "/home/ruoyi/projects/static-web/index.html" is not found (2: No such file or directory), client: 192.168.10.212, server: localhost, request: "GET / HTTP/1.1", host: "192.168.10.195"</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>参考资料：</p>
+<p><a target="_blank" rel="noopener" href="https://doc.ruoyi.vip/ruoyi/other/faq.html#%E5%A6%82%E4%BD%95%E9%83%A8%E7%BD%B2%E9%85%8D%E7%BD%AE%E6%94%AF%E6%8C%81https%E8%AE%BF%E9%97%AE">https://doc.ruoyi.vip/ruoyi/other/faq.html#%E5%A6%82%E4%BD%95%E9%83%A8%E7%BD%B2%E9%85%8D%E7%BD%AE%E6%94%AF%E6%8C%81https%E8%AE%BF%E9%97%AE</a></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>&nbsp;这次这个问题解决起来也是花了些时间，但还好最终解决，要不然心情就比较沮丧了。</p>
+<p>&nbsp;</p>
 
                 
             </div>
@@ -461,7 +516,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://yinchuan.work/2024/01/10/a3/">http://yinchuan.work/2024/01/10/a3/</a>
+                    <a href="http://yinchuan.work/2024/03/24/a12%20-%20%E5%89%AF%E6%9C%AC%20(2)/">http://yinchuan.work/2024/03/24/a12%20-%20%E5%89%AF%E6%9C%AC%20(2)/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -499,8 +554,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/linux/">
-                                    <span class="chip bg-color">linux</span>
+                                <a href="/tags/%E5%AF%86%E7%A0%81/">
+                                    <span class="chip bg-color">密码</span>
+                                </a>
+                            
+                                <a href="/tags/Nginx/">
+                                    <span class="chip bg-color">Nginx</span>
                                 </a>
                             
                         </div>
@@ -583,13 +642,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2024/01/20/a2/">
+                <a href="/2024/03/24/a12%20-%20%E5%89%AF%E6%9C%AC/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="聊一聊Linux相关的话题">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="用Openssl生成可靠的CA证书使网址http变https">
                         
-                        <span class="card-title">聊一聊Linux相关的话题</span>
+                        <span class="card-title">用Openssl生成可靠的CA证书使网址http变https</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -600,7 +659,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-01-20
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-03-24
                         </span>
                         <span class="publish-author">
                             
@@ -617,12 +676,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/linux/">
-                        <span class="chip bg-color">linux</span>
+                    <a href="/tags/%E5%AF%86%E7%A0%81/">
+                        <span class="chip bg-color">密码</span>
                     </a>
                     
-                    <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
-                        <span class="chip bg-color">操作系统</span>
+                    <a href="/tags/Nginx/">
+                        <span class="chip bg-color">Nginx</span>
                     </a>
                     
                 </div>
@@ -636,13 +695,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/10/01/a1/">
+                <a href="/2024/03/14/a11/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="SQL优化技巧">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="用ukey登录系统">
                         
-                        <span class="card-title">SQL优化技巧</span>
+                        <span class="card-title">用ukey登录系统</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -653,14 +712,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-10-01
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-14
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
-                                    数据库
+                            <a href="/categories/%E6%8A%80%E6%9C%AF/" class="post-category">
+                                    技术
                                 </a>
                             
                             
@@ -670,8 +729,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/SQL/">
-                        <span class="chip bg-color">SQL</span>
+                    <a href="/tags/%E5%AF%86%E7%A0%81/">
+                        <span class="chip bg-color">密码</span>
                     </a>
                     
                 </div>
