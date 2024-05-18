@@ -146,6 +146,15 @@
   </url>
   
   <url>
+    <loc>http://yinchuan.work/404.html</loc>
+    
+    <lastmod>2023-12-14</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://yinchuan.work/categories/index.html</loc>
     
     <lastmod>2023-12-11</lastmod>
