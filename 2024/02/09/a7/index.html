@@ -400,7 +400,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    908
+                    1.3k
                 </div>
                 
 
@@ -477,7 +477,7 @@ fatal<span class="token punctuation">:</span> Could not read <span class="token 
 <p>2重新配置密钥  </p>
 <p>3尝试换端口</p>
 <p>用3最后解决的问题。</p>
-<p>git bash终端输入：ssh -T <a href="mailto:&#x67;&#x69;&#116;&#64;&#x67;&#105;&#116;&#104;&#117;&#x62;&#46;&#x63;&#111;&#x6d;">&#x67;&#x69;&#116;&#64;&#x67;&#105;&#116;&#104;&#117;&#x62;&#46;&#x63;&#111;&#x6d;</a></p>
+<p>git bash终端输入：ssh -T <a href="mailto:&#x67;&#x69;&#116;&#64;&#103;&#x69;&#x74;&#104;&#117;&#x62;&#46;&#99;&#x6f;&#109;">&#x67;&#x69;&#116;&#64;&#103;&#x69;&#x74;&#104;&#117;&#x62;&#46;&#99;&#x6f;&#109;</a></p>
 <p><img src="/images/article22.png" alt="图二"></p>
 <p>如果出现上图显示的内容，那就是可能22端口出问题了，然后进入~&#x2F;.ssh&#x2F;目录下修改config文件，建议直接在终端中输入vim ~&#x2F;.ssh&#x2F;config，使用vim编辑器打开此文件，一般是为空，然后加上以下代码：</p>
 <pre class="line-numbers language-javascript"><code class="language-javascript">Host github<span class="token punctuation">.</span>com
@@ -499,6 +499,27 @@ Port <span class="token number">443</span>
 <p>美化很细节</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/kuashijidexibao/article/details/112971657">https://blog.csdn.net/kuashijidexibao/article/details/112971657</a></p>
 <h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>不同的技术适合不同的场景，适合的才是最好的。今后有关Hexo的问题都会汇总到这儿。</p>
+<h3 id="ps-2024-5-19"><a href="#ps-2024-5-19" class="headerlink" title="ps:2024.5.19."></a>ps:2024.5.19.</h3><p>最近由于发布的博客文章增多，点击第2页显示错误，报404，但是本地运行（hexo s）是显示正常。出现这种bug是很奇怪的，检查发现（hexo g）hexo&#x2F;public，这是本地生成的文件。github与之相比少了一个page文件夹。而这个里面就是第2页的静态数据，所以由于github上没有这个，导致的不显示。</p>
+<p>于是我考虑用git命令的方式更新github。</p>
+<p>1在本地找到一个空文件夹</p>
+<p>2文件夹打开Git Bash</p>
+<p>3初始化git仓库</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml">git init
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>4从git上拉取代码</p>
+<pre><code>//XXX是项目的地址，是SSH的
+git pull XXX
+</code></pre>
+<p>5删除拉取的代码，但要保留.git的文件</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml">git add .
+git commit <span class="token punctuation">-</span>m "Remove specific files or directories"
+//XXX是项目的地址，是SSH的
+git remote add origin XXX
+//推送到远程
+git push <span class="token punctuation">-</span>u origin main
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>以上操作以后本以为问题解决，但发现还是没有page文件夹！</p>
+<p>于是我就只能在github页面上操作，点击【Add file】-&gt;【Create new file】，在Name your file中填写【page】文件夹里面的目录和文件，文件夹和目录用”&#x2F;“隔开。在编辑index.html文件，粘贴上hexo生成的数据，然后保存即可。这样的话就很麻烦了。但问题原因找到了，那就是git推送代码的时候，为什么【page】文件夹推不上去？？？</p>
 
                 
             </div>
