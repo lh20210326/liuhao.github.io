@@ -1,3 +1,4 @@
+http://yinchuan.work/2024/10/19/a15/
 http://yinchuan.work/2024/05/19/a13/
 http://yinchuan.work/2024/06/22/a14/
 http://yinchuan.work/2024/02/09/a7/
@@ -30,6 +31,7 @@ http://yinchuan.work/tags/Hexo/
 http://yinchuan.work/tags/Jenkins/
 http://yinchuan.work/tags/%E5%B7%A5%E5%85%B7/
 http://yinchuan.work/tags/%E6%80%9D%E7%BB%B4/
+http://yinchuan.work/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/
 http://yinchuan.work/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/
 http://yinchuan.work/categories/%E6%8A%80%E6%9C%AF/
 http://yinchuan.work/categories/%E7%94%9F%E6%B4%BB/

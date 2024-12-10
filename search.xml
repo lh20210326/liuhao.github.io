@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>OpenMetadata元数据管理工具本地部署</title>
+      <link href="/2024/10/19/a15/"/>
+      <url>/2024/10/19/a15/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>​        最近公司有数据安全风险评估的项目，与相关公司有过合作，但他们公司的产品确实不好用，然后公司领导决定能否自己搞个处理数据的系统，我们公司不是专门做软件开发的公司，所以就试试搞。网上找了很多资料，先看把这个系统部署上，在分析研究后续的二次开发的可行性。当然本次操作首先要熟悉docker，可以在网上找点视频教程快速入个门。</p><h2 id="官网"><a href="#官网" class="headerlink" title="官网"></a>官网</h2><p><a href="https://open-metadata.org/">https://open-metadata.org/</a></p><p>很重要，百度很多教程，比如csdn，几乎都是参考官网的安装教程，所以仔细阅读官网就很关键。</p><h2 id="Docker国内镜像失效"><a href="#Docker国内镜像失效" class="headerlink" title="Docker国内镜像失效"></a>Docker国内镜像失效</h2><p>​        官网上有Docker、K8s方式的部署流程，很多csdn就是基于此，但是由于镜像被封没法拉取。开始搞的时候还没想到，网上也是很多老教程，还以为是自己系统没有配置好，后来才百度搜索发现是国内docker镜像源在今年中旬都关了。</p><p>​        然后再B站看到了一个叫【成哥小时候】UP主发的视频，而且视频下面还带着他安装好的OpenMetadata虚拟机文件链接，自己有虚拟机直接可以运行。我的做法是：</p><p>一、把他vmware的镜像上传到阿里云镜像仓库。</p><p><img src="/images/article34.jpg" alt="阿里云私有镜像仓库"></p><p>二、然后在公司的服务器上部署，从这个私有阿里云镜像仓库下载就可以，通过docker这个配置文件，一条指令就可以拉取镜像，但是你要在compose.yml文件把拉取镜像的地址配置上你的阿里云镜像仓库。我记得有四个镜像。</p><pre class="line-numbers language-yml"><code class="language-yml">services:  mysql:    container_name: openmetadata_mysql    image: registry--XXXXX--1.3.2    command: "--sort_buffer_size=10M"    restart: always    --------------  elasticsearch:    container_name: openmetadata_elasticsearch    image: registry--XXXXX--8.10.2    environment:    --------------  execute-migrate-all:    container_name: execute_migrate_all    image: registry--XXXXX--1.3.1    command: "./bootstrap/openmetadata-ops.sh migrate"    environment:     --------------  openmetadata-server:    container_name: openmetadata_server    restart: always    image: registry--XXXXX--1.3.1    environment:<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>重点说明：</p><p>1.以上是docker-compose.yml文件部分信息，我们只需要把【image】后面的信息配置成我们自己阿里云镜像仓库的地址就好了。</p><p>2.上面的1.3.2，1.3.1，8.10.2是docker的tag，是我从虚拟机上传到阿里云镜像服务管理，REPOSITORY 名称相同，为了好区分自己命名的。</p><p><strong>execute_migrate_all和 openmetadata_server镜像地址是同一个！</strong></p><p><img src="/images/article33.jpg" alt="docker镜像"></p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这个问题思路很简单，但解决过程有点曲折，还是根据up主的资料，在加上那天晚上突然有点灵感，配置文件上改了一下，镜像就能拉取下来了~</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 大数据 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>面试题</title>
       <link href="/2024/06/22/a14/"/>
       <url>/2024/06/22/a14/</url>
